@@ -1,0 +1,132 @@
+#字典
+dic={
+dic[key]=item
+del dic[key]
+dic.get(key,default=None)
+dic.update(dic2)
+#默认字典
+from collections import defaultdict
+dic=defaultdict(class)
+
+#双向队列
+from collections import deque
+deque.append()
+deque.pop()
+deque.appendleft()
+deque.popleft()
+
+#堆
+import heapq
+heapq.heapify(list)
+heapq.heappush(list,item)
+heapq.heappop(list)
+heapq.heappushpop(list,item)
+
+#二分查找
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid 
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1 
+#二分查找函数
+import bisect
+loc=bisect.bisect_left(list,item)
+
+#欧拉筛
+def ES(n):
+  isprime=[True for _ in range(n+1)]
+  prime=[]
+  for i in range(2,n+1):
+      if isprime[i]:
+          prime.append(i)
+      for j in range(len(prime)):
+          if  i*prime[j]>n:break
+          isprime[i*prime[j]]=False
+          if i%prime[j]==0 :break
+  return prime
+
+#dfs
+def dfs(x,y,i,j):
+  stack=[(x,y)]
+  while stack:
+    cx,cy=stack.pop()
+    if (cx,cy)==(i,j):
+      return True
+    for dx,dy in directions:
+      nx,ny=cx+dx,cy+dy
+      if 0<=nx<m and 0<=ny<n and some限制因素:
+        stack.append((nx,ny))
+  return False
+
+#bfs
+from collections import deque
+def bfs(x,y,i,j):
+  q=deque((x,y,0))
+  inq=set((x,y))
+  while q:
+    cx,cy,step=q.popleft()
+    if (cx,cy)==(i,j):
+      return step
+    for dx,dy in directions:
+      nx,ny=cx+dx,cy+dy
+      if 0<=nx<n and 0<=ny<n and (nx,ny) not in inq:
+        if otherfactors:
+          q.append(nx,ny,step+1)
+          inq.add((nx,ny))
+
+#Dijkstra
+import heapq
+def dijkstra(s,mat,e):
+    MAXN=float('inf')
+    weight=[[MAXN]*len(mat[0]) for _ in range(len(mat))]
+    q=[s]
+    weight[s[1]][s[2]]=0
+    d=[(-1,0),(1,0),(0,-1),(0,1)]
+    while q:
+        w,x,y=heapq.heappop(q)
+        if (x,y)==e:
+            return weight[x][y]
+        for dx,dy in d:
+            nx,ny=x+dx,y+dy
+            if 0<=nx<len(mat) and 0<=ny<len(mat[0]):#不用not in visited
+                new_w=weight[x][y]+deltaweight
+                if new_w<weight[nx][ny]:
+                    weight[nx][ny]=new_w
+                    heapq.heappush(q,(new_w,nx,ny))
+  return -1
+
+#全排列
+def permute(nums):
+    if len(nums) == 1: return [nums]
+    permutations = []
+    for i in range(len(nums)):
+        current = nums[i]
+        remaining = nums[:i] + nums[i+1:]
+        for p in permute(remaining):
+            permutations.append([current] + p)
+    return permutations
+
+#dp
+#01背包
+dp = [0]*T
+for i in range(n):
+    for t in range(T,time[i]-1,-1):
+        dp[t] = max(dp[t],dp[t-time[i]]+value[i])
+ans = dp[T]
+#多重背包
+dp = [0]*T
+for i in range(n):
+    all_num = nums[i]
+    k = 1
+    while all_num>0:
+        use_num = min(k,all_num)
+        for t in range(T,use_num*time[i]-1,-1):
+            dp[t] = max(dp[t-use_num*time[i]]+use_num*value[i],dp[t])
+        k *= 2
+        all_num -= use_num
